@@ -8,13 +8,21 @@
 
 import UIKit
 import os.log
+import Firebase
+import FirebaseDatabase
+
 
 class MealTableViewController: UITableViewController {
 
     var meals = [Meal]()
+    let networkManager = NetworkManager()
+    let ref = Database.database()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        
         // Uncomment the following line to preserve selection between presentations
         //self.clearsSelectionOnViewWillAppear = false
        
@@ -22,13 +30,10 @@ class MealTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         navigationItem.leftBarButtonItem = editButtonItem
-        
-        if let savedMeals = loadMeals() {
-            meals += savedMeals
-        }
-        else {
+        if meals.count == 0 {
             loadSampleMeals()
         }
+//        networkManager.addNewMeal(newMeal: meals[0])
     }
     
 
@@ -79,19 +84,6 @@ class MealTableViewController: UITableViewController {
             meals += [meal1, meal2, meal3]
     }
     
-    private func saveMeals() {
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(meals, toFile: Meal.ArchiveURL.path)
-        if isSuccessfulSave {
-            os_log("Meals successfully saved.", log: OSLog.default, type: .debug)
-        } else {
-            os_log("Failed to save meals...", log: OSLog.default, type: .error)
-        }
-    }
-    
-    private func loadMeals() -> [Meal]? {
-        return NSKeyedUnarchiver.unarchiveObject(withFile: Meal.ArchiveURL.path) as?
-        [Meal]
-    }
     @IBAction func unwindToMealList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? MealViewController, let meal = sourceViewController.meal {
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
@@ -107,7 +99,7 @@ class MealTableViewController: UITableViewController {
             meals.append(meal)
             tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
-            saveMeals()
+            //saveMeals()
         }
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -138,7 +130,7 @@ class MealTableViewController: UITableViewController {
         UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             meals.remove(at: indexPath.row)
-            saveMeals()
+            //saveMeals()
             tableView.deleteRows(at: [indexPath], with: .fade)
             
         } else if editingStyle == .insert {
