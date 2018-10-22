@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import FirebaseCore
+import Firebase
+import FirebaseStorage
 
 class LoginViewController: UIViewController {
 
@@ -20,6 +23,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Auth.auth().didStateChangeListener
         
 
         // Do any additional setup after loading the view.
@@ -59,11 +63,7 @@ class LoginViewController: UIViewController {
         alertController.addAction(saveAction)
         alertController.addAction(cancelAction)
         
-        
-        
         present(alertController, animated: true)
         
-        
     }
-    
 }

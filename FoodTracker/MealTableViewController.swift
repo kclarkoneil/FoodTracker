@@ -16,7 +16,7 @@ class MealTableViewController: UITableViewController {
 
     var meals = [Meal]()
     let networkManager = NetworkManager()
-    let ref = Database.database()
+    let ref = Database.database().reference(withPath: "meal-item")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +33,9 @@ class MealTableViewController: UITableViewController {
         if meals.count == 0 {
             loadSampleMeals()
         }
-//        networkManager.addNewMeal(newMeal: meals[0])
+        ref.observe(.value, with: { snapshot in
+            print(snapshot.value as Any)
+        })
     }
     
 
