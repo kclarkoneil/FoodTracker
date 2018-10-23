@@ -209,7 +209,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Log In"/>
                                 <connections>
-                                    <segue destination="LWW-bn-qOc" kind="show" id="U3n-Wo-29a"/>
+                                    <segue destination="LWW-bn-qOc" kind="show" identifier="LoginSegue" id="U3n-Wo-29a"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z8b-jG-8lc">
@@ -237,12 +237,12 @@
                     </view>
                     <connections>
                         <outlet property="passwordTextField" destination="AbY-by-A7m" id="i3v-LW-8ax"/>
-                        <outlet property="userNameTextField" destination="ce6-tP-Cy4" id="sjy-cU-xke"/>
+                        <outlet property="usernameTextField" destination="ce6-tP-Cy4" id="JKb-Gc-KUH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="df8-mC-5Np" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1183.2" y="-934.18290854572717"/>
+            <point key="canvasLocation" x="-1484" y="-1015"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Xlr-sD-Q5o">

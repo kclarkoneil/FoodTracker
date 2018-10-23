@@ -15,27 +15,36 @@ import FirebaseDatabase
 class MealTableViewController: UITableViewController {
 
     var meals = [Meal]()
-    let networkManager = NetworkManager()
-    let ref = Database.database().reference(withPath: "meal-item")
+    let mealRef = Database.database().reference(withPath: "meal-item")
+    let imageStorageRef = Storage.storage().reference(withPath: "image")
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        mealRef.queryOrdered(byChild: "meal-item").observe(.value) { snapshot in
+            for child in snapshot.children {
+                meals.app
+            }
+        }
         
-        
-        // Uncomment the following line to preserve selection between presentations
-        //self.clearsSelectionOnViewWillAppear = false
-       
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
         navigationItem.leftBarButtonItem = editButtonItem
         if meals.count == 0 {
             loadSampleMeals()
         }
-        ref.observe(.value, with: { snapshot in
+        mealRef.observe(.value, with: { snapshot in
             print(snapshot.value as Any)
         })
+//        ref.queryOrdered(byChild: "completed").observe(.value, with: { snapshot in
+//            var newItems: [GroceryItem] = []
+//            for child in snapshot.children {
+//                if let snapshot = child as? DataSnapshot,
+//                    let groceryItem = GroceryItem(snapshot: snapshot) {
+//                    newItems.append(groceryItem)
+//                }
+//            }
+//            self.items = newItems
+//            self.tableView.reloadData()
+//        })
     }
     
 
