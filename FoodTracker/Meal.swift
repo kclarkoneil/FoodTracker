@@ -8,24 +8,21 @@
 
 import UIKit
 import os.log
+import Firebase
+import FirebaseDatabase
+import FirebaseAuth
 
-class Meal: NSObject, NSCoding {
+
+class Meal: NSObject {
     
-    var name:String
+    let name:String
     var image: UIImage?
-    var rating: Int
+    let rating: Int
+    let addedBy: String?
+    var imageURL: String?
     
-    struct PropertyKey {
-        static let name = "name"
-        static let photo = "photo"
-        static let rating = "rating"
-    }
-    
-    static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
-    static let ArchiveURL = DocumentsDirectory.appendingPathComponent("meals")
-    
-    
-    init?(name:String, photo:UIImage?, rating:Int) {
+    //Initiate locally from ViewController
+    init?(name:String, rating:Int, image: UIImage) {
         
         guard !name.isEmpty else {
             return nil
@@ -36,25 +33,57 @@ class Meal: NSObject, NSCoding {
         }
         
         self.name = name
-        self.image = photo
         self.rating = rating
-    }
-    func encode(with aCoder: NSCoder) {
-        aCoder.encode(name, forKey: PropertyKey.name)
-        aCoder.encode(image, forKey: PropertyKey.photo)
-        aCoder.encode(rating, forKey: PropertyKey.rating)
+        self.addedBy = Auth.auth().currentUser!.email!
+        self.image = image
+        self.imageURL = nil
+        
+        
     }
     
-    required convenience init?(coder aDecoder: NSCoder) {
-        guard let name = aDecoder.decodeObject(forKey:PropertyKey.name) as? String
-            else {
-                os_log("Unable to decode the name for a Meal object.", log: OSLog.default, type: .debug)
-                return nil
-        }
-        let photo = aDecoder.decodeObject(forKey: PropertyKey.photo) as? UIImage
-        let rating = aDecoder.decodeInteger(forKey: PropertyKey.rating)
+    //Initiate remotely from Firebase
+    init?(snapshot: DataSnapshot) {
+        guard
+            let value = snapshot.value as? [String: Any],
+            let mealAddedBy = value["addedBy"] as? String,
+            let mealName = value["name"] as? String,
+            let mealRating = value["rating"] as? Int,
+            let imageURL = value["imageURL"] as? String
+            else {return nil}
         
-        self.init(name: name, photo: photo, rating: rating)
+        self.addedBy = mealAddedBy
+        self.name = mealName
+        self.rating = mealRating
+        self.imageURL = imageURL
+        super.init()
+        if let URLString = URL(string: imageURL) {
+        image = retrieveImageFromStorage(imageURL: URLString)
+        }
+    }
+    
+    //Helper method to convert meal object
+    func toAnyObject() -> Any {
+        return [
+            "name": name,
+            "rating": rating,
+            "addedBy": addedBy!,
+            "imageURL": imageURL ?? ""
+        ]
     }
 
+    func retrieveImageFromStorage(imageURL: URL) -> UIImage {
+        
+        var retrievedImage = UIImage()
+        do {
+            let data = try Data(contentsOf: imageURL)
+            if let image = UIImage(data: data) {
+                retrievedImage = image
+            }
+        }
+        catch {
+            print("Error retrieving image \(error)")
+        }
+        return retrievedImage
+    }
 }
+

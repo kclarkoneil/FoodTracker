@@ -8,6 +8,10 @@
 
 import UIKit
 import os.log
+import FirebaseDatabase
+import Firebase
+import FirebaseStorage
+
 
 class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -25,19 +29,20 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         else {
             fatalError("The MealViewController is not inside a navigation controller.")
         }
-    
     }
+    
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    
     var meal: Meal?
+    let mealRef = Database.database().reference(withPath: "meal-item")
+    let imageStorageRef = Storage.storage().reference(withPath: "image")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         nameTextField.delegate = self
-        
-        
         if let meal = meal {
             navigationItem.title = meal.name
             nameTextField.text   = meal.name
@@ -50,8 +55,6 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     func textFieldDidBeginEditing(_ textField: UITextField) {
         // Disable the Save button while editing.
         updateSaveButtonState()
-       
-       
     }
     
     override func didReceiveMemoryWarning() {
@@ -67,6 +70,31 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         updateSaveButtonState()
         navigationItem.title = textField.text
     }
+    
+    //Upload image to Firebase Storage bucket and Retrieve URl, assign it to meal object and upload meal object to Databaseor
+    func uploadMeal(data: Data, meal: Meal) {
+        let storageRef = Storage.storage().reference(withPath: "images/\(meal.name)")
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/jpeg"
+        storageRef.putData(data, metadata: metaData) { (returnData, error) in
+            if error == nil {
+                print("uploadComplete metadata: \(returnData)")
+                storageRef.downloadURL(completion: { (url, error) in
+                    if error == nil {
+                meal.imageURL = url?.absoluteString
+                let ref = self.mealRef.child("\(meal.name)")
+                ref.setValue(meal.toAnyObject())
+                    }
+                    else {
+                        print("urlupload incomplete error: \(error)")
+                    }
+                })
+            }
+            else {
+                print("upload failed with error: \(error)")
+        }
+    }
+    }
     @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
         nameTextField.resignFirstResponder()
         let imagePickerController = UIImagePickerController()
@@ -78,27 +106,33 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         dismiss(animated: true, completion: nil)
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        guard let selectedImage = info[UIImagePickerControllerOriginalImage] as?
-            UIImage else {
-                fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
-        }
+        if let selectedImage = info[UIImagePickerControllerOriginalImage] as?
+            UIImage {
         photoImageView.image = selectedImage
+        }
         dismiss(animated: true, completion: nil)
     }
+    //Saves meal with imagename in database and image in storage bucket
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
-        
         guard let button = sender as? UIBarButtonItem, button === saveButton else {
             os_log("The save button was not pressed, cancelling", log: OSLog.default,
                    type: .debug)
             return
         }
         let name = nameTextField.text ?? ""
-        let photo = photoImageView.image
+        let photo = photoImageView.image!
         let rating = ratingField.rating
         
-        meal = Meal(name: name, photo: photo, rating: rating)
+        meal = Meal(name: name, rating: rating, image: photo)
+        
+        if let newMeal = meal, let imageData = UIImageJPEGRepresentation(photo, 0.8) {
+        
+            uploadMeal(data: imageData, meal: newMeal)
+        
+        
+        }
     }
     private func updateSaveButtonState() {
         let text = nameTextField.text ?? ""

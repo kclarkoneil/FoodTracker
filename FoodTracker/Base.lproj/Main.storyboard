@@ -96,7 +96,7 @@
             </objects>
             <point key="canvasLocation" x="2575" y="-403"/>
         </scene>
-        <!--Your Meals-->
+        <!--Meal Table View Controller-->
         <scene sceneID="Hac-dD-bMf">
             <objects>
                 <tableViewController id="3F4-8L-ngq" customClass="MealTableViewController" customModule="FoodTracker" customModuleProvider="target" sceneMemberID="viewController">
@@ -143,7 +143,7 @@
                             <outlet property="delegate" destination="3F4-8L-ngq" id="ywe-g9-wyS"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Your Meals" id="1Ox-UL-Xsm">
+                    <navigationItem key="navigationItem" id="1Ox-UL-Xsm">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="SWX-l6-S20">
                             <connections>
                                 <segue destination="PlK-DM-edC" kind="presentation" identifier="AddItem" id="Saq-w2-OyQ"/>
@@ -209,7 +209,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Log In"/>
                                 <connections>
-                                    <segue destination="LWW-bn-qOc" kind="show" id="U3n-Wo-29a"/>
+                                    <segue destination="LWW-bn-qOc" kind="show" identifier="LoginSegue" id="U3n-Wo-29a"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z8b-jG-8lc">
@@ -237,12 +237,12 @@
                     </view>
                     <connections>
                         <outlet property="passwordTextField" destination="AbY-by-A7m" id="i3v-LW-8ax"/>
-                        <outlet property="userNameTextField" destination="ce6-tP-Cy4" id="sjy-cU-xke"/>
+                        <outlet property="usernameTextField" destination="ce6-tP-Cy4" id="JKb-Gc-KUH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="df8-mC-5Np" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1183.2" y="-934.18290854572717"/>
+            <point key="canvasLocation" x="-1484" y="-1015"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Xlr-sD-Q5o">
