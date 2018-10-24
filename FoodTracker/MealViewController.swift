@@ -71,14 +71,24 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         navigationItem.title = textField.text
     }
     
-    //Upload image to Firebase Storage bucket
-    func uploadImage(data: Data, imageName : String) {
-        let storageRef = Storage.storage().reference(withPath: "images/\(meal!.name)")
+    //Upload image to Firebase Storage bucket and Retrieve URl, assign it to meal object and upload meal object to Databaseor
+    func uploadMeal(data: Data, meal: Meal) {
+        let storageRef = Storage.storage().reference(withPath: "images/\(meal.name)")
         let metaData = StorageMetadata()
         metaData.contentType = "image/jpeg"
         storageRef.putData(data, metadata: metaData) { (returnData, error) in
-            if error != nil {
+            if error == nil {
                 print("uploadComplete metadata: \(returnData)")
+                storageRef.downloadURL(completion: { (url, error) in
+                    if error == nil {
+                meal.imageURL = url?.absoluteString
+                let ref = self.mealRef.child("\(meal.name)")
+                ref.setValue(meal.toAnyObject())
+                    }
+                    else {
+                        print("urlupload incomplete error: \(error)")
+                    }
+                })
             }
             else {
                 print("upload failed with error: \(error)")
@@ -115,12 +125,13 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         let photo = photoImageView.image!
         let rating = ratingField.rating
         
-        meal = Meal(name: name, photo: photo, rating: rating)
+        meal = Meal(name: name, rating: rating, image: photo)
         
         if let newMeal = meal, let imageData = UIImageJPEGRepresentation(photo, 0.8) {
-        let ref = mealRef.child("meal-item/\(newMeal.name)")
-        ref.setValue(meal!.toAnyObject())
-        uploadImage(data: imageData, imageName: newMeal.name)
+        
+            uploadMeal(data: imageData, meal: newMeal)
+        
+        
         }
     }
     private func updateSaveButtonState() {

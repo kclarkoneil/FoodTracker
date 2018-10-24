@@ -96,7 +96,7 @@
             </objects>
             <point key="canvasLocation" x="2575" y="-403"/>
         </scene>
-        <!--Your Meals-->
+        <!--Meal Table View Controller-->
         <scene sceneID="Hac-dD-bMf">
             <objects>
                 <tableViewController id="3F4-8L-ngq" customClass="MealTableViewController" customModule="FoodTracker" customModuleProvider="target" sceneMemberID="viewController">
@@ -143,7 +143,7 @@
                             <outlet property="delegate" destination="3F4-8L-ngq" id="ywe-g9-wyS"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Your Meals" id="1Ox-UL-Xsm">
+                    <navigationItem key="navigationItem" id="1Ox-UL-Xsm">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="SWX-l6-S20">
                             <connections>
                                 <segue destination="PlK-DM-edC" kind="presentation" identifier="AddItem" id="Saq-w2-OyQ"/>
