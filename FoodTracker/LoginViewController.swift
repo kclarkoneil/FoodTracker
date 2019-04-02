@@ -10,12 +10,13 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
-class LoginViewController: UIViewController {
 
+class LoginViewController: UIViewController {
+    
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
     
-
+    
     
     var userName: String?
     var passWord: String?
@@ -30,26 +31,28 @@ class LoginViewController: UIViewController {
                 self.performSegue(withIdentifier: "LoginSegue", sender: self)
             }
         }
-        
-
-        // Do any additional setup after loading the view.
+        passwordTextField.isSecureTextEntry = true
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func login(_ sender: UIButton) {
+        
+        Auth.auth().signIn(withEmail: usernameTextField.text!, password: passwordTextField.text!) { user, error in
+            if let error = error, user == nil {
+                let alert = UIAlertController(title: "Sign In Failed",
+                                              message: error.localizedDescription,
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
-    */
+    
+    
     @IBAction func createAccount(_ sender: UIButton) {
         
         let alertController = UIAlertController(title: "Create Account", message: "Enter your account details", preferredStyle: .alert)
@@ -63,10 +66,10 @@ class LoginViewController: UIViewController {
         }
         let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
             guard
-            let enteredEmail = alertController.textFields![0].text,
-            let enteredPassword = alertController.textFields![1].text,
-            enteredEmail.count > 0,
-            enteredPassword.count > 0
+                let enteredEmail = alertController.textFields![0].text,
+                let enteredPassword = alertController.textFields![1].text,
+                enteredEmail.count > 0,
+                enteredPassword.count > 0
                 else {
                     return
             }
@@ -86,15 +89,15 @@ class LoginViewController: UIViewController {
         
     }
 }
-    extension LoginViewController: UITextFieldDelegate {
-        
-        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            if textField == usernameTextField {
-                passwordTextField.becomeFirstResponder()
-            }
-            if textField == passwordTextField {
-                textField.resignFirstResponder()
-            }
-            return true
+extension LoginViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == usernameTextField {
+            passwordTextField.becomeFirstResponder()
         }
+        if textField == passwordTextField {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
 }

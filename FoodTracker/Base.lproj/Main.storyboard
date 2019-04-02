@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -22,7 +21,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0OL-Ie-Btd">
-                                <rect key="frame" x="0.0" y="84" width="375" height="410"/>
+                                <rect key="frame" x="0.0" y="84" width="375" height="370"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PE3-sV-aOl">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
@@ -33,34 +32,73 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
-                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="meal1" translatesAutoresizingMaskIntoConstraints="NO" id="KMR-qg-ckY">
-                                        <rect key="frame" x="27.5" y="38" width="320" height="320"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oBc-ID-PFA">
+                                        <rect key="frame" x="27.5" y="38" width="320" height="280"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Plate" translatesAutoresizingMaskIntoConstraints="NO" id="66h-ZE-l40">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="280"/>
+                                                <gestureRecognizers/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="320" id="2sp-1S-MKG"/>
+                                                </constraints>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jhi-Hi-ANB">
+                                                <rect key="frame" x="260" y="220" width="50" height="50"/>
+                                                <state key="normal" title="Button" image="Camera Icon"/>
+                                                <connections>
+                                                    <action selector="cameraButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IZV-hd-VUM"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4G3-va-GkM">
+                                                <rect key="frame" x="10" y="220" width="50" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="50" id="Prc-GL-oLx"/>
+                                                    <constraint firstAttribute="height" constant="50" id="pRV-kl-Qj6"/>
+                                                </constraints>
+                                                <state key="normal" title="Button" image="Gallery Icon"/>
+                                                <connections>
+                                                    <action selector="galleryButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bPa-Jp-4DD"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <gestureRecognizers/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="KMR-qg-ckY" secondAttribute="height" multiplier="1:1" id="w9x-ci-qjo"/>
+                                            <constraint firstItem="Jhi-Hi-ANB" firstAttribute="trailing" secondItem="66h-ZE-l40" secondAttribute="trailing" constant="-10" id="6Xc-ER-Xii"/>
+                                            <constraint firstItem="66h-ZE-l40" firstAttribute="width" secondItem="oBc-ID-PFA" secondAttribute="width" id="7I8-di-5Cu"/>
+                                            <constraint firstAttribute="height" constant="280" id="GMl-jZ-QaU"/>
+                                            <constraint firstItem="Jhi-Hi-ANB" firstAttribute="height" secondItem="4G3-va-GkM" secondAttribute="height" id="Mho-vo-Awe"/>
+                                            <constraint firstItem="Jhi-Hi-ANB" firstAttribute="width" secondItem="4G3-va-GkM" secondAttribute="width" id="Oub-UH-TPz"/>
+                                            <constraint firstItem="Jhi-Hi-ANB" firstAttribute="top" secondItem="4G3-va-GkM" secondAttribute="top" id="S4R-22-dxK"/>
+                                            <constraint firstItem="66h-ZE-l40" firstAttribute="top" secondItem="oBc-ID-PFA" secondAttribute="top" id="eru-hu-KfK"/>
+                                            <constraint firstItem="Jhi-Hi-ANB" firstAttribute="bottom" secondItem="4G3-va-GkM" secondAttribute="bottom" id="fwM-4R-VCh"/>
+                                            <constraint firstItem="4G3-va-GkM" firstAttribute="bottom" secondItem="oBc-ID-PFA" secondAttribute="bottom" constant="-10" id="hsd-Uv-LsN"/>
+                                            <constraint firstItem="66h-ZE-l40" firstAttribute="centerX" secondItem="oBc-ID-PFA" secondAttribute="centerX" id="kbj-Tj-6nW"/>
+                                            <constraint firstItem="66h-ZE-l40" firstAttribute="height" secondItem="oBc-ID-PFA" secondAttribute="height" id="lcN-8H-FNh"/>
+                                            <constraint firstItem="4G3-va-GkM" firstAttribute="leading" secondItem="oBc-ID-PFA" secondAttribute="leading" constant="10" id="vCV-Ax-yQ1"/>
                                         </constraints>
                                         <connections>
-                                            <outletCollection property="gestureRecognizers" destination="I1S-i7-cxM" appends="YES" id="ODx-bM-H2v"/>
+                                            <outletCollection property="gestureRecognizers" destination="Yd3-Na-WT1" appends="YES" id="lqK-zP-nef"/>
                                         </connections>
-                                    </imageView>
+                                    </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kgn-C8-Cf4" customClass="RatingField" customModule="FoodTracker" customModuleProvider="target">
-                                        <rect key="frame" x="61.5" y="366" width="252" height="44"/>
+                                        <rect key="frame" x="61.5" y="326" width="252" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="3kf-3L-JAm"/>
+                                        </constraints>
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="KMR-qg-ckY" firstAttribute="leading" secondItem="0OL-Ie-Btd" secondAttribute="leading" constant="27.5" id="7jS-r2-zeI"/>
                                     <constraint firstItem="PE3-sV-aOl" firstAttribute="top" secondItem="0OL-Ie-Btd" secondAttribute="top" id="GK2-iV-Eeq"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="PE3-sV-aOl" secondAttribute="trailing" id="K1P-Ib-hqM"/>
-                                    <constraint firstItem="KMR-qg-ckY" firstAttribute="top" secondItem="PE3-sV-aOl" secondAttribute="bottom" constant="8" id="K3P-eI-goc"/>
-                                    <constraint firstAttribute="trailing" secondItem="KMR-qg-ckY" secondAttribute="trailing" constant="27.5" id="M1x-1h-oNc"/>
                                     <constraint firstItem="PE3-sV-aOl" firstAttribute="leading" secondItem="0OL-Ie-Btd" secondAttribute="leadingMargin" id="M8L-7P-3HJ"/>
-                                    <constraint firstItem="Kgn-C8-Cf4" firstAttribute="top" secondItem="KMR-qg-ckY" secondAttribute="bottom" constant="8" id="gRn-dD-pyt"/>
                                 </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0OL-Ie-Btd" secondAttribute="trailing" id="ExZ-49-o35"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0OL-Ie-Btd" secondAttribute="bottom" constant="213" id="Ppy-uI-UPp"/>
                             <constraint firstItem="0OL-Ie-Btd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="chf-Yh-CGu"/>
                             <constraint firstItem="0OL-Ie-Btd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="fSt-kb-PDm"/>
                         </constraints>
@@ -80,21 +118,23 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="cameraButton" destination="Jhi-Hi-ANB" id="Bo4-30-XmJ"/>
+                        <outlet property="galleryButton" destination="4G3-va-GkM" id="RXG-XF-mPn"/>
                         <outlet property="nameTextField" destination="PE3-sV-aOl" id="Gth-Th-LwF"/>
-                        <outlet property="photoImageView" destination="KMR-qg-ckY" id="3uy-zU-tFv"/>
+                        <outlet property="photoImageView" destination="66h-ZE-l40" id="TOf-9t-ZhS"/>
                         <outlet property="ratingField" destination="Kgn-C8-Cf4" id="Lxv-Io-4AZ"/>
                         <outlet property="saveButton" destination="GTx-FV-4tX" id="Vih-ny-MXD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <exit id="YX2-de-aLU" userLabel="Exit" sceneMemberID="exit"/>
-                <tapGestureRecognizer id="I1S-i7-cxM">
+                <tapGestureRecognizer id="Yd3-Na-WT1">
                     <connections>
-                        <action selector="selectImageFromPhotoLibrary:" destination="BYZ-38-t0r" id="TyF-iV-7iO"/>
+                        <action selector="photoEditDidTap:" destination="BYZ-38-t0r" id="kov-XU-8OG"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2575" y="-403"/>
+            <point key="canvasLocation" x="2473" y="-1007"/>
         </scene>
         <!--Meal Table View Controller-->
         <scene sceneID="Hac-dD-bMf">
@@ -134,7 +174,7 @@
                                     <outlet property="PhotoImageView" destination="Ilb-Vl-jwS" id="oXs-Qn-J2B"/>
                                     <outlet property="nameLabel" destination="S9t-Zx-Tn4" id="ak1-h9-ead"/>
                                     <outlet property="ratingField" destination="l3g-fl-Vph" id="bsp-np-WLr"/>
-                                    <segue destination="BYZ-38-t0r" kind="show" identifier="ShowDetail" id="ROl-ZZ-taG"/>
+                                    <segue destination="c07-C9-pa9" kind="show" identifier="EditMealSegue" id="biX-2F-0cS"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -144,16 +184,19 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="1Ox-UL-Xsm">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="SWX-l6-S20">
+                        <barButtonItem key="rightBarButtonItem" title="Log Out" id="ABN-of-zGy">
                             <connections>
-                                <segue destination="PlK-DM-edC" kind="presentation" identifier="AddItem" id="Saq-w2-OyQ"/>
+                                <action selector="logOut:" destination="3F4-8L-ngq" id="zqx-VD-5cC"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="c07-C9-pa9" kind="show" identifier="NewMealSegue" id="1ve-Sd-jz3"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OdN-xX-6qO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="772" y="-403.44827586206901"/>
+            <point key="canvasLocation" x="788" y="-959.37031484257875"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="jHb-kg-HFd">
@@ -209,7 +252,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Log In"/>
                                 <connections>
-                                    <segue destination="LWW-bn-qOc" kind="show" identifier="LoginSegue" id="U3n-Wo-29a"/>
+                                    <action selector="login:" destination="zCH-T9-c9h" eventType="touchUpInside" id="jjl-Tu-iwx"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z8b-jG-8lc">
@@ -238,54 +281,58 @@
                     <connections>
                         <outlet property="passwordTextField" destination="AbY-by-A7m" id="i3v-LW-8ax"/>
                         <outlet property="usernameTextField" destination="ce6-tP-Cy4" id="JKb-Gc-KUH"/>
+                        <segue destination="Qew-yf-6PX" kind="show" identifier="LoginSegue" id="b7O-Aq-jPY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="df8-mC-5Np" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1484" y="-1015"/>
+            <point key="canvasLocation" x="-1409" y="-959"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="Xlr-sD-Q5o">
+        <scene sceneID="wtA-j1-mug">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="LWW-bn-qOc" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Qew-yf-6PX" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="WgT-Uv-Uh3">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="YDB-qS-jUY">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="3F4-8L-ngq" kind="relationship" relationship="rootViewController" id="5Bn-xF-QOP"/>
+                        <segue destination="3F4-8L-ngq" kind="relationship" relationship="rootViewController" id="Pfe-aZ-99Q"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gO9-sr-nqI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="asQ-9D-zIc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-190" y="-403"/>
+            <point key="canvasLocation" x="-151.19999999999999" y="-959.37031484257875"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="k93-BO-uQ1">
+        <scene sceneID="6ca-SC-18r">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="PlK-DM-edC" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="c07-C9-pa9" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="6Zs-o7-AMx">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Oqk-4h-TfW">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="hyu-AJ-rbM"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="LkD-JO-Ywq"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1Ld-EP-2vl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xs1-BJ-MeV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1697" y="54"/>
+            <point key="canvasLocation" x="1828" y="-959.37031484257875"/>
         </scene>
     </scenes>
     <resources>
+        <image name="Camera Icon" width="50" height="50"/>
+        <image name="Gallery Icon" width="50" height="50"/>
+        <image name="Plate" width="2400" height="1600"/>
         <image name="meal1" width="540" height="540"/>
         <image name="meal2" width="528" height="540"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ROl-ZZ-taG"/>
+        <segue reference="biX-2F-0cS"/>
     </inferredMetricsTieBreakers>
 </document>
